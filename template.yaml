@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  nodejs custom runtime
+
+Parameters:
+  NodeVersion:
+    Type: String
+    Default: 12.16.1
+
+Resources:
+  nodeRuntime:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: nodeRuntime
+      ContentUri: ./runtime
+      Description: !Sub 'Deno runtime V${NodeVersion}'
+      LicenseInfo: MIT
+      RetentionPolicy: Retain
+
+  helloWorld:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./helloWorld/src
+      MemorySize: 128
+      FunctionName: helloWorld
+      Handler: app.handler
+      Runtime: provided
+      Layers:
+        - !Ref nodeRuntime
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+    Metadata:
+      BuildMethod: makefile
+
+Outputs:
+  DenoRuntimeARN:
+    Value: !Ref nodeRuntime
+    Export:
+      Name: nodeRuntimeARN
+  helloWorldApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"

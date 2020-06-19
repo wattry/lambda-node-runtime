@@ -1,0 +1,4 @@
+tests/*
+makefile
+package.json
+package.lock
