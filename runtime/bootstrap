@@ -19,9 +19,6 @@ then
   )
 fi
 
-# Set the node version
-export NODE_VERSION=$(exec $node_dir --version)
-
 exec env \
   $node_dir \
   --expose-gc \

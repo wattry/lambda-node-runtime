@@ -3,16 +3,13 @@
   "version": "1.0.0",
   "description": "A custom runtime builder for nodejs",
   "config": {
-    "npm_config_node_version": "12.16.1"
+    "node_version": "v12.16.1"
   },
   "scripts": {
+    "setup": "./setup-node.sh",
     "build": "sam build",
     "deploy": "sam deploy --guided --region us-east-1",
-    "download": "curl -JL https://nodejs.org/download/release/v${npm_config_node_version}/node-v${npm_config_node_version}-linux-x64.tar.xz -o ./runtime/nodejs.tar.xz",
-    "remove-nodejs": "rm -rf ./runtime/nodejs",
-    "remove-tar": "rm -rf ./runtime/nodejs.tar.xz",
-    "test": "jest .",
-    "untar": "mkdir ./runtime/nodejs && tar --strip-components=1 -xf ./runtime/nodejs.tar.xz -C ./runtime/nodejs"
+    "test": "jest ."
   },
   "author": "Ryan Wattrus",
   "license": "MIT"

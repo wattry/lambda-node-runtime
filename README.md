@@ -12,7 +12,6 @@ Ideally the runtime layer and lambda function should be managed in separate sam 
         * lambda
     2. deploy
     3. invoke
-2. 
 
 Custom runtimes require extra steps in order to setup the most importantly understanding the build process.
 

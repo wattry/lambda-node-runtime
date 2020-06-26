@@ -9,25 +9,25 @@ Parameters:
     Default: 12.16.1
 
 Resources:
-  nodeRuntime:
+  NodeRuntime:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: nodeRuntime
-      ContentUri: ./runtime
-      Description: !Sub 'Deno runtime V${NodeVersion}'
+      ContentUri: runtime
+      Description: !Sub 'Node runtime V${NodeVersion}'
       LicenseInfo: MIT
       RetentionPolicy: Retain
 
   helloWorld:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./helloWorld/src
+      CodeUri: ./helloWorld
       MemorySize: 128
       FunctionName: helloWorld
       Handler: app.handler
       Runtime: provided
       Layers:
-        - !Ref nodeRuntime
+        - !Ref NodeRuntime
       Events:
         ApiEvent:
           Type: Api
@@ -39,7 +39,7 @@ Resources:
 
 Outputs:
   DenoRuntimeARN:
-    Value: !Ref nodeRuntime
+    Value: !Ref NodeRuntime
     Export:
       Name: nodeRuntimeARN
   helloWorldApi:
